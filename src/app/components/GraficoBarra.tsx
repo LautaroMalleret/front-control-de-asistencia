@@ -12,8 +12,13 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+type dataentry = {
+  fecha: string; 
+  numero: number;
+};
+
 type GraficoBarraProps = {
-  data: any[];
+  data: dataentry[];
   keys: string[];
 };
 

@@ -10,8 +10,15 @@ import {
 } from "recharts";
 import { curveCardinal } from "d3-shape";
 
+type DataPoint = {
+  fecha: string;          // o Date si lo vas a parsear
+  plan_unidades: number;
+  aceptadas: number;
+  rechazadas: number;
+};
+
 type GraficoAreaProps = {
-    data: any[];
+    data: DataPoint[];
 };
 
 const cardinal = curveCardinal.tension(0.2);

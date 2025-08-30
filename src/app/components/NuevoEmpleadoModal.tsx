@@ -1,4 +1,4 @@
-import Empleado from "../models/empleado"
+// import Empleado from "../models/empleado"
 
 // interface ModalNuevoEmpleadoProps{
 //     empleado: Empleado;
