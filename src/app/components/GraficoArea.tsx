@@ -18,7 +18,7 @@ const cardinal = curveCardinal.tension(0.2);
 
 const GraficoArea: React.FC<GraficoAreaProps> = ({data}) => {
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="90%" height="90%">
       <AreaChart
         width={500}
         height={400}

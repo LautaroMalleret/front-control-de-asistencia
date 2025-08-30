@@ -2,10 +2,12 @@ import Asistencia from "../models/asistencia";
 import Falta from "../models/faltas";
 import TiempoRetraso from "../models/tiempoRetraso";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Next.js
+
 // Obtener todas las asistencias
 export async function getAsistencias(): Promise<Asistencia[]> {
   try {
-    const res = await fetch("http://localhost:4000/api/asistencias", {
+    const res = await fetch(`${apiUrl}/api/asistencias`, {
     });
     if (!res.ok) {
       throw new Error("Failed to fetch asistencias");
@@ -20,7 +22,7 @@ export async function getAsistencias(): Promise<Asistencia[]> {
 // Obtener llegadas tarde
 export async function getLlegadasTarde(): Promise<Asistencia[]> {
   try {
-    const res = await fetch("http://localhost:4000/api/asistencias/tarde", {
+    const res = await fetch(`${apiUrl}/api/asistencias/tarde`, {
     });
     if (!res.ok) {
       throw new Error("Failed to fetch asistencias");
@@ -36,7 +38,7 @@ export async function getLlegadasTarde(): Promise<Asistencia[]> {
 //obtener faltas
 export async function getFaltas(): Promise<Falta[]> {
   try {
-    const res = await fetch("http://localhost:4000/api/asistencias/faltas", {
+    const res = await fetch(`${apiUrl}/api/asistencias/faltas`, {
     });
     if (!res.ok) {
       throw new Error("Failed to fetch faltas");
@@ -51,7 +53,7 @@ export async function getFaltas(): Promise<Falta[]> {
 //obtener tiempo de retrasos
 export async function getTiempoRetrasos(): Promise<TiempoRetraso[]> {
   try {
-    const res = await fetch("http://localhost:4000/api/asistencias/tiempoDeRetraso", {
+    const res = await fetch(`${apiUrl}/api/asistencias/tiempoDeRetraso`, {
     });
     if (!res.ok) {
       throw new Error("Failed to fetch tiempo de retrasos");
