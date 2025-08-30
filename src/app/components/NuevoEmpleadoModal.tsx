@@ -1,14 +1,15 @@
 import Empleado from "../models/empleado"
 
-interface ModalNuevoEmpleadoProps{
-    empleado: Empleado;
-    onClose: () => void;
-    onSave: (empleado: Empleado) => void;
-}
-const ModalNuevoEmpleado: React.FC<ModalNuevoEmpleadoProps> = ({empleado, onClose, onSave}) =>{
+// interface ModalNuevoEmpleadoProps{
+//     empleado: Empleado;
+//     onClose: () => void;
+//     onSave: (empleado: Empleado) => void;
+// }
+// const ModalNuevoEmpleado: React.FC<ModalNuevoEmpleadoProps> = ({empleado, onClose, onSave}) =>{
+const ModalNuevoEmpleado = () =>{
     return (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded shadow-lg w-1/3">
+        <div className="  bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white p-6 rounded shadow-lg w-96">
                 <h2 className="text-xl mb-4">Nuevo Empleado</h2>
                 <form>
                     <div className="mb-4">
@@ -32,20 +33,20 @@ const ModalNuevoEmpleado: React.FC<ModalNuevoEmpleadoProps> = ({empleado, onClos
                         <input type="text" className="w-full border rounded px-3 py-2" />
                     </div>
                 </form>
-                <div className="flex justify-end gap-4">
+                {/* <div className="flex justify-end gap-4">
                     <button 
-                        onClick={onClose} 
+                        // onClick={onClose} 
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Cancelar
                     </button>
                     <button 
-                        onClick={() => onSave(empleado)} 
+                        // onClick={() => onSave(empleado)} 
                         className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Guardar
                     </button>
-                </div>
+                </div> */}
             </div>
         </div>
     );

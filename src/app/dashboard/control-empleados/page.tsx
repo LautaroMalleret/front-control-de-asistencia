@@ -9,7 +9,8 @@ import ModalNuevoEmpleado from "@/app/components/NuevoEmpleadoModal";
 export default function ControlEmpleadosPage() {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [nuevoEmpleadoModalVisible, setNuevoEmpleadoModalVisible] = useState<boolean>(false);
+  const [nuevoEmpleadoModalVisible, setNuevoEmpleadoModalVisible] =
+    useState<boolean>(false);
 
   //Estilos para la tabla
   const customStyles = {
@@ -102,13 +103,42 @@ export default function ControlEmpleadosPage() {
         LISTADO DE EMPLEADOS
       </h1>
 
-      {/* <button onClick={() => setNuevoEmpleadoModalVisible(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 mt-4">
+      <button
+        onClick={() => setNuevoEmpleadoModalVisible(true)}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 mt-4"
+      >
         Agregar Empleado
-      </button> */}
-
+      </button>
+      <div className=" justify-center ">
+        {nuevoEmpleadoModalVisible && (
+          <div>
+            <ModalNuevoEmpleado
+              // empleado={{} as Empleado}
+              // onClose={() => setNuevoEmpleadoModalVisible(false)}
+              // onSave={(empleado: Empleado) => {
+              //   nuevoEmpleado(empleado);
+              // }}
+            />
+            <div className="flex justify-center gap-4 my-5">
+              <button
+                onClick={() => setNuevoEmpleadoModalVisible(false)}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => nuevoEmpleado({} as Empleado)}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
       <div>
         <DataTable
-          className="z-30"
+          className=""
           columns={columns}
           data={empleados}
           pagination
@@ -116,17 +146,6 @@ export default function ControlEmpleadosPage() {
           progressPending={loading}
           customStyles={customStyles}
         />
-      </div>
-      <div className="flex gap-4 justify-center z-40">
-        {nuevoEmpleadoModalVisible && (
-          <ModalNuevoEmpleado
-            empleado={{} as Empleado}
-            onClose={() => setNuevoEmpleadoModalVisible(false)}
-            onSave={(empleado: Empleado) => {
-              nuevoEmpleado(empleado);
-            }}
-          />
-        )}
       </div>
     </div>
   );
