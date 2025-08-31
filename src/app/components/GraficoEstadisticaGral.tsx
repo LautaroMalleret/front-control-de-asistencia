@@ -19,7 +19,7 @@ type GraficoVerticalProps = {
 
 const GraficoEstadisticaGral: React.FC<GraficoVerticalProps> = ({ data }) => {
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer width="100%" height="100%" className="bg-gray-200 p-2 rounded-2xl my-3">
       <ComposedChart
         width={500}
         height={400}

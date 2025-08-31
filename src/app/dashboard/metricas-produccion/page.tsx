@@ -129,8 +129,7 @@ useEffect(() => {
           </h2>
         <GraficoLinea data={oeeData} />
 
-
-
+        <hr className="my-8" />
         <h2 className="text-3xl font-bold mb-4 mt-8 text-center">
           Estadisticas generales de produccion
         </h2>
