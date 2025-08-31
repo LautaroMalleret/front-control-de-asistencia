@@ -11,13 +11,6 @@ import {
 import { curveCardinal } from "d3-shape";
 import Cumplimiento from "../models/cumplimientos";
 
-// type DataPoint = {
-//   fecha: string;          // o Date si lo vas a parsear
-//   plan_unidades: number;
-//   aceptadas: number;
-//   rechazadas: number;
-// };
-
 type GraficoAreaProps = {
     data: Cumplimiento[];
 };

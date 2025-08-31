@@ -1,18 +1,17 @@
 "use client";
-import GraficoBarra from "./../../components/GraficoBarra";
-import { useEffect, useState } from "react";
-import { getFaltas, getTiempoRetrasos } from "@/app/api/asistencias";
-import Falta from "@/app/models/faltas";
-import TiempoRetraso from "@/app/models/tiempoRetraso";
-import GraficoArea from "@/app/components/GraficoArea";
+import {  useEffect, useState } from "react";
+
 import Cumplimiento from "@/app/models/cumplimientos";
-import {getCumplimientosData,  getRendimientosData,} from "@/app/api/produccion";
+import {getCumplimientosData,  getRendimientosData, getEstadisticasData} from "@/app/api/produccion";
 import GraficoTiempo from "@/app/components/GraficoTiempo";
 import Rendimiento from "@/app/models/rendimiento";
+import GraficoBarraMix from "@/app/components/GraficoBarraMix";
+import GraficoEstadisticaGral from "@/app/components/GraficoEstadisticaGral";
+import Estadistica from "@/app/models/estadistica";
 //Pagina que muestra graficas con metricas de produccion
 export default function MetricasProduccionPage() {
-  const [faltasData, setFaltasData] = useState<Falta[]>([]);
-  const [tiempoRetrasos, setTiempoRetrasos] = useState<TiempoRetraso[]>([]);
+  // const [faltasData, setFaltasData] = useState<Falta[]>([]);
+  // const [tiempoRetrasos, setTiempoRetrasos] = useState<TiempoRetraso[]>([]);
 
   const [cumplimientosMedialunas, setCumplimientosMedialunas] = useState<Cumplimiento[]>([]);
   const [cumplimientosPan, setCumplimientosPan] = useState<Cumplimiento[]>([]);
@@ -22,31 +21,35 @@ export default function MetricasProduccionPage() {
   const [rendimientosPan, setRendimientosPan] = useState<Rendimiento[]>([]);
   const [rendimientosTorta, setRendimientosTorta] = useState<Rendimiento[]>([]);
 
-  //obtengo los tiempos de retrasos por dia
-  useEffect(() => {
-    async function fetchTiempoRetrasos() {
+  const [estadisticasMedialunas, setEstadisticasMedialunas] = useState<Estadistica[]>([]);
+  const [estadisticasPan, setEstadisticasPan] = useState<Estadistica[]>([]);
+  const [estadisticasTorta, setEstadisticasTorta] = useState<Estadistica[]>([]);
+
+
+useEffect(() => {
+    async function fetchEstadisticasData(tipo: string) {
       try {
-        const data = await getTiempoRetrasos();
-        setTiempoRetrasos(data);
+        const data = await getEstadisticasData(tipo);
+        if (tipo === "Medialunas") {
+          setEstadisticasMedialunas(data);
+        }
+        if (tipo === "Pan") {
+          setEstadisticasPan(data);
+        }
+        if (tipo === "Torta") {
+          setEstadisticasTorta(data);
+        }
       } catch (error) {
-        console.error("Error fetching tiempo de retrasos data:", error);
+        console.error("Error fetching estadisticas data:", error);
       }
     }
-    fetchTiempoRetrasos();
+
+    fetchEstadisticasData("Medialunas");
+    fetchEstadisticasData("Pan");
+    fetchEstadisticasData("Torta");
   }, []);
 
-  //obtengo las faltas por dia
-  useEffect(() => {
-    async function fetchFaltasData() {
-      try {
-        const data = await getFaltas();
-        setFaltasData(data);
-      } catch (error) {
-        console.error("Error fetching faltas data:", error);
-      }
-    }
-    fetchFaltasData();
-  }, []);
+ 
 
   //obtengo los cumplimientos de produccion por dia y tipo de producto
   useEffect(() => {
@@ -102,24 +105,29 @@ export default function MetricasProduccionPage() {
       </h1>
       <hr />
       <div className="w-full h-96 mt-8 p-3 ">
-        <h2 className="text-3xl font-bold mb-4 mt-4 text-center">
-          Estadisticas de faltas y retrasos
+        <h2 className="text-3xl font-bold mb-4 mt-8 text-center">
+          Estadisticas generales de produccion
         </h2>
-        <GraficoBarra data={faltasData} keys={["faltas"]} />
-        <GraficoBarra data={tiempoRetrasos} keys={["minutos"]} />
+                <h3 className="text-xl font-bold mb-2 text-center mt-10">Medialunas</h3>
+                <GraficoEstadisticaGral data = {estadisticasMedialunas} />
+                <h3 className="text-xl font-bold mb-2 text-center mt-10">Pan</h3>
+                <GraficoEstadisticaGral data = {estadisticasPan} />
+                <h3 className="text-xl font-bold mb-2 text-center mt-10">Tortas</h3>
+                <GraficoEstadisticaGral data = {estadisticasTorta} />
         <hr className="my-8" />
+
         <h2 className="text-3xl font-bold mb-4 mt-8 text-center">
           Cumplimiento de produccion
         </h2>
 
         <h4 className="text-xl font-bold mb-2 text-center mt-10">Medialunas</h4>
-        <GraficoArea data={cumplimientosMedialunas} />
+        <GraficoBarraMix data={cumplimientosMedialunas} />
 
         <h3 className="text-xl font-bold mb-2 text-center mt-10">Pan</h3>
-        <GraficoArea data={cumplimientosPan} />
+        <GraficoBarraMix data={cumplimientosPan} />
 
         <h3 className="text-xl font-bold mb-2 text-center mt-10">Torta</h3>
-        <GraficoArea data={cumplimientosTorta} />
+        <GraficoBarraMix data={cumplimientosTorta} />
         <hr className="my-8" />
         <h2 className="text-3xl font-bold mb-4 mt-8 text-center">
           Control de tiempo operativo{" "}
@@ -132,6 +140,8 @@ export default function MetricasProduccionPage() {
 
         <h3 className="text-xl font-bold mb-2 text-center mt-10">Tortas</h3>
         <GraficoTiempo data={rendimientosTorta} />
+
+
       </div>
     </div>
   );
