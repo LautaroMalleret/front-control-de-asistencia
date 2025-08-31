@@ -9,23 +9,24 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { curveCardinal } from "d3-shape";
+import Cumplimiento from "../models/cumplimientos";
 
-type DataPoint = {
-  fecha: string;          // o Date si lo vas a parsear
-  plan_unidades: number;
-  aceptadas: number;
-  rechazadas: number;
-};
+// type DataPoint = {
+//   fecha: string;          // o Date si lo vas a parsear
+//   plan_unidades: number;
+//   aceptadas: number;
+//   rechazadas: number;
+// };
 
 type GraficoAreaProps = {
-    data: DataPoint[];
+    data: Cumplimiento[];
 };
 
 const cardinal = curveCardinal.tension(0.2);
 
 const GraficoArea: React.FC<GraficoAreaProps> = ({data}) => {
   return (
-    <ResponsiveContainer width="90%" height="90%">
+    <ResponsiveContainer width="100%" height="100%" className="bg-gray-200 p-2 rounded-2xl">
       <AreaChart
         width={500}
         height={400}

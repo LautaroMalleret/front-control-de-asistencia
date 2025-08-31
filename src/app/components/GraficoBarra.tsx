@@ -26,7 +26,7 @@ type GraficoBarraProps = {
 // que recibe datos y claves como props
 const GraficoBarra: React.FC<GraficoBarraProps> = ({ data, keys }) => {
   return (
-    <ResponsiveContainer width="90%" height="90%">
+    <ResponsiveContainer width="100%" height="100%" className="bg-gray-200 p-2 rounded-2xl my-3" >
       <BarChart
         width={500}
         height={300}

@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import TopBar from "./components/Topbar";
 
 export default function RootLayout({
