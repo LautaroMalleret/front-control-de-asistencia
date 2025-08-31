@@ -1,6 +1,7 @@
 import Cumplimiento from "../models/cumplimientos";
 import Estadistica from "../models/estadistica";
 import Rendimiento from "../models/rendimiento";
+import Oee from "../models/oee";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Next.js
 
 export async function getCumplimientosData(tipo_producto: string): Promise<Cumplimiento[]> {
@@ -45,6 +46,21 @@ export async function getEstadisticasData(tipo_producto: string): Promise<Estadi
   return res.json();
 } catch (error) {
   console.error("Error fetching estadisticas:", error);
+  return [];
+}
+}
+
+export async function getOeeData(): Promise<Oee[]> {
+  try {
+    const res = await fetch(`${apiUrl}/api/produccion/oee`, {
+    });
+    if (!res.ok) {
+    throw new Error("Failed to fetch oee");
+  }
+  console.log(res);
+  return res.json();
+} catch (error) {
+  console.error("Error fetching oee:", error);
   return [];
 }
 }

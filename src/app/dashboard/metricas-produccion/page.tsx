@@ -8,6 +8,9 @@ import Rendimiento from "@/app/models/rendimiento";
 import GraficoBarraMix from "@/app/components/GraficoBarraMix";
 import GraficoEstadisticaGral from "@/app/components/GraficoEstadisticaGral";
 import Estadistica from "@/app/models/estadistica";
+import GraficoLinea from "@/app/components/GraficoLinea";
+import Oee from "@/app/models/oee";
+import { getOeeData } from "@/app/api/produccion";
 //Pagina que muestra graficas con metricas de produccion
 export default function MetricasProduccionPage() {
   // const [faltasData, setFaltasData] = useState<Falta[]>([]);
@@ -24,6 +27,22 @@ export default function MetricasProduccionPage() {
   const [estadisticasMedialunas, setEstadisticasMedialunas] = useState<Estadistica[]>([]);
   const [estadisticasPan, setEstadisticasPan] = useState<Estadistica[]>([]);
   const [estadisticasTorta, setEstadisticasTorta] = useState<Estadistica[]>([]);
+
+  const [oeeData, setOeeData] = useState<Oee[]>([]);
+
+useEffect(() => {
+    async function fetchOeeData() {
+      try {
+        const data = await getOeeData();
+        setOeeData(data);
+      } catch (error) {
+        console.error("Error fetching oee data:", error);
+      }
+    }
+    
+    fetchOeeData();
+  }, []);
+
 
 
 useEffect(() => {
@@ -105,6 +124,13 @@ useEffect(() => {
       </h1>
       <hr />
       <div className="w-full h-96 mt-8 p-3 ">
+        <h2 className="text-2xl font-bold mb-4 text-center">
+          Estadisticas OEE por producto
+          </h2>
+        <GraficoLinea data={oeeData} />
+
+
+
         <h2 className="text-3xl font-bold mb-4 mt-8 text-center">
           Estadisticas generales de produccion
         </h2>
