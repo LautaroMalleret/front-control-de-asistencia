@@ -1,5 +1,5 @@
 import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import Rendimiento from '../models/rendimiento';
 
 
@@ -10,7 +10,7 @@ type GraficoTiempoProps = {
 const GraficoTiempo: React.FC<GraficoTiempoProps> = ({data}) => {
   return (
     <ResponsiveContainer width="100%" height="100%" className="bg-gray-200 p-2 rounded-2xl my-3">
-      <AreaChart
+      <LineChart
         width={500}
         height={400}
         data={data}
@@ -21,14 +21,15 @@ const GraficoTiempo: React.FC<GraficoTiempoProps> = ({data}) => {
           bottom: 0,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray="1 1" />
         <XAxis dataKey="fecha" />
         <YAxis />
         <Tooltip />
-        <Area type="monotone" dataKey="plan_minutos" stroke="#8884d8" fill="#8884d8" />
-        <Area type="monotone" dataKey="tiempo_operativo" stroke="#00ee33" fill="#00ee33" />
+        <Line dataKey="plan_minutos" stroke="#8884d8" fill="#8884d8" />
 
-      </AreaChart>
+        <Line dataKey="tiempo_operativo" stroke="#00ee33" fill="#00ee33" />
+
+      </LineChart>
     </ResponsiveContainer>
   );
 };
