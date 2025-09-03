@@ -31,3 +31,16 @@ export async function guardarEmpleado(empleado: Empleado) {
     return null;
   }
 }
+export async function obtenerUltimoId(): Promise<number> {
+  try {
+    const res = await fetch(`${apiUrl}/api/empleados/ultimoId`, {
+    });
+    if (!res.ok) {
+      throw new Error("Failed to fetch ultimoId")}
+    const data = await res.json();
+    return data[0]?._id ?? -1;
+  } catch (error) {
+    console.error("Error fetching ultimoId:", error);
+    return -1 ;
+  }
+}

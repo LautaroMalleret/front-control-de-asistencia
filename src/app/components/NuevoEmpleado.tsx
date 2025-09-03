@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { guardarEmpleado } from "@/app/api/empleados"; // Debes definir esta función en tu API
+import { guardarEmpleado, obtenerUltimoId } from "@/app/api/empleados"; // Debes definir esta función en tu API
 
 const roles = ["operario", "supervisor", "calidad"];
 const areas = ["produccion", "envasado", "calidad", "deposito"];
@@ -22,6 +22,9 @@ export default function NuevoEmpleadoForm() {
     setRol(roles[0]);
     setArea(areas[0]);
     setTurno(turnos[0]);
+    const ultimoId = await obtenerUltimoId();
+    console.log("ultimo id:" + ultimoId);
+    alert("Empleado guardado con éxito, ID: " + ultimoId+ ".");
   };
 
   return (
