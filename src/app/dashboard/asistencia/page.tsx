@@ -7,7 +7,9 @@ import { getFaltas, getTiempoRetrasos } from "@/app/api/asistencias";
 import Falta from "@/app/models/faltas";
 import TiempoRetraso from "@/app/models/tiempoRetraso";
 import GraficoBarra from "./../../components/GraficoBarra";
-
+import Incidencia from "@/app/models/incidencia";
+import IncidenciasTable from "./../../components/IncidenciasTable";
+import { getIncidencias } from "@/app/api/asistencias";
 
 // página de control de asistencias
 export default function AsistenciaPage() {
@@ -40,14 +42,18 @@ export default function AsistenciaPage() {
       },
     },
   ];
-  
+
   const [asistencias, setAsistencias] = useState<Asistencia[]>([]); // todas las asistencias
   const [asistenciasTarde, setAsistenciasTarde] = useState<Asistencia[]>([]); // llegadas tarde
+const [incidenciasData, setIncidenciasData] = useState<Incidencia[]>([]);
+
 
   const [loadingAsistenicas, setLoadingAsistencias] = useState<boolean>(true); // carga de todas las asistencias
   const [loadingTarde, setLoadingTarde] = useState<boolean>(true); // carga de llegadas tarde
 
-    const [faltasData, setFaltasData] = useState<Falta[]>([]);
+  
+
+  const [faltasData, setFaltasData] = useState<Falta[]>([]);
   const [tiempoRetrasos, setTiempoRetrasos] = useState<TiempoRetraso[]>([]);
   // obtener todas las asistencias
   useEffect(() => {
@@ -78,31 +84,43 @@ export default function AsistenciaPage() {
     getTarde();
   }, []);
 
-   //obtengo los tiempos de retrasos por dia
     useEffect(() => {
-      async function fetchTiempoRetrasos() {
-        try {
-          const data = await getTiempoRetrasos();
-          setTiempoRetrasos(data);
-        } catch (error) {
-          console.error("Error fetching tiempo de retrasos data:", error);
-        }
+    async function fetchData() {
+      try {
+        const data = await getIncidencias();
+        setIncidenciasData(data);
+      } catch (error) {
+        console.error("Error fetching asistencias:", error);
       }
-      fetchTiempoRetrasos();
-    }, []);
-  
-    //obtengo las faltas por dia
-    useEffect(() => {
-      async function fetchFaltasData() {
-        try {
-          const data = await getFaltas();
-          setFaltasData(data);
-        } catch (error) {
-          console.error("Error fetching faltas data:", error);
-        }
+
+    }
+    fetchData();
+  }, []);
+  //obtengo los tiempos de retrasos por dia
+  useEffect(() => {
+    async function fetchTiempoRetrasos() {
+      try {
+        const data = await getTiempoRetrasos();
+        setTiempoRetrasos(data);
+      } catch (error) {
+        console.error("Error fetching tiempo de retrasos data:", error);
       }
-      fetchFaltasData();
-    }, []);
+    }
+    fetchTiempoRetrasos();
+  }, []);
+
+  //obtengo las faltas por dia
+  useEffect(() => {
+    async function fetchFaltasData() {
+      try {
+        const data = await getFaltas();
+        setFaltasData(data);
+      } catch (error) {
+        console.error("Error fetching faltas data:", error);
+      }
+    }
+    fetchFaltasData();
+  }, []);
   // definir columnas de la tabla
   const columnas = [
     {
@@ -170,16 +188,24 @@ export default function AsistenciaPage() {
         fixedHeader
         progressPending={loadingTarde}
         conditionalRowStyles={conditionalRowStyles}
+        
       />
-      <h2 className="text-3xl font-bold mb-4 mt-4 text-center">
-          Estadisticas de faltas y retrasos
-        </h2>
-              <div className="w-full h-96 mt-8 p-3 ">
 
+      <h3 className="text-xl font-bold my-4 text-center">LLEGADAS TARDE</h3>
+
+      <div className="w-full h-100 mb-10 p-3 block">
+      <IncidenciasTable datatable={incidenciasData} />
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <hr />
+      <h3 className="text-3xl font-bold mb-4 mt-10 text-center">
+        Estadisticas de faltas y retrasos
+      </h3>
+      <div className="w-full h-96 mt-8 p-3 ">
         <GraficoBarra data={faltasData} keys={["faltas"]} />
         <GraficoBarra data={tiempoRetrasos} keys={["minutos"]} />
         <hr className="my-8" />
-        </div>
+      </div>
     </div>
   );
 }

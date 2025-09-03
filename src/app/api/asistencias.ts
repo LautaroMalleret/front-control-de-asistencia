@@ -1,6 +1,7 @@
 import Asistencia from "../models/asistencia";
 import Falta from "../models/faltas";
 import TiempoRetraso from "../models/tiempoRetraso";
+import Incidencia from "../models/incidencia";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Next.js
 
@@ -63,4 +64,20 @@ export async function getTiempoRetrasos(): Promise<TiempoRetraso[]> {
     console.error("Error fetching tiempo de retrasos:", error);
     return [];
   }
+}
+
+export async function getIncidencias(): Promise<Incidencia[]> {
+  try {
+    const res = await fetch(`${apiUrl}/api/incidencia`, {
+    });
+    if(!res.ok){
+      throw new Error("Failed to fetch incidencias");
+    }
+    return res.json();
+  } catch (error )
+  {
+    console.error("Error fetching incidencias:", error);
+    return [];
+  }
+
 }

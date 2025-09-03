@@ -26,7 +26,7 @@ export default function DashboardLayout({
             href="/dashboard/control-empleados"
             className={navLinkClasses("/dashboard/control-empleados")}
           >
-            CONTROL DE EMPLEADOS
+            EMPLEADOS
           </Link>
           <Link
             href="/dashboard/asistencia"
@@ -38,8 +38,9 @@ export default function DashboardLayout({
             href="/dashboard/metricas-produccion"
             className={navLinkClasses("/dashboard/metricas-produccion")}
           >
-            METRICAS DE PRODUCCION
+            METRICAS
           </Link>
+
         </nav>
       </div>
       <div>

@@ -3,7 +3,7 @@ import { getEmpleados } from "@/app/api/empleados";
 import Empleado from "@/app/models/empleado";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import ModalNuevoEmpleado from "@/app/components/NuevoEmpleadoModal";
+import ModalNuevoEmpleado from "@/app/components/NuevoEmpleado";
 
 //Muestra la tabla con los empleados y un boton para agregar nuevos empleados
 export default function ControlEmpleadosPage() {
@@ -48,26 +48,26 @@ export default function ControlEmpleadosPage() {
   }, []);
 
   //Funcion para agregar un nuevo empleado
-  async function nuevoEmpleado(empleado: Empleado) {
-    try {
-      const response = await fetch("/api/empleados", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(empleado),
-      });
-      if (response.ok) {
-        const nuevoEmp = await response.json();
-        setEmpleados([...empleados, nuevoEmp]);
-        setNuevoEmpleadoModalVisible(false);
-      } else {
-        console.error("Error creating empleado:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error creating empleado:", error);
-    }
-  }
+  // async function nuevoEmpleado(empleado: Empleado) {
+  //   try {
+  //     const response = await fetch("/api/empleados", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(empleado),
+  //     });
+  //     if (response.ok) {
+  //       const nuevoEmp = await response.json();
+  //       setEmpleados([...empleados, nuevoEmp]);
+  //       setNuevoEmpleadoModalVisible(false);
+  //     } else {
+  //       console.error("Error creating empleado:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating empleado:", error);
+  //   }
+  // }
   //Columnas de la tabla
   const columns = [
     {
@@ -111,28 +111,14 @@ export default function ControlEmpleadosPage() {
       </button>
       <div className=" justify-center ">
         {nuevoEmpleadoModalVisible && (
-          <div>
-            <ModalNuevoEmpleado
-              // empleado={{} as Empleado}
-              // onClose={() => setNuevoEmpleadoModalVisible(false)}
-              // onSave={(empleado: Empleado) => {
-              //   nuevoEmpleado(empleado);
-              // }}
-            />
-            <div className="flex justify-center gap-4 my-5">
-              <button
-                onClick={() => setNuevoEmpleadoModalVisible(false)}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={() => nuevoEmpleado({} as Empleado)}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Guardar
-              </button>
-            </div>
+          <div className="w-100% justify-center">
+            <ModalNuevoEmpleado />
+            <button
+              onClick={() => setNuevoEmpleadoModalVisible(false)}
+              className="bg-red-700  hover:bg-red-400 text-white font-bold py-2 px-4 rounded mb-4 mt-4"
+            >
+              Cancelar
+            </button>
           </div>
         )}
       </div>
